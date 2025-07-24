@@ -1,6 +1,6 @@
 # Iron Tools Tutorial 🎮
 
-![IronTools Logo](docs/iron-Tools-logo.png)
+![IronTools Logo](https://github.com/MuhammedDemir06/odin-inspector-tools/tree/main/doc)
 
 A Unity project demonstrating how to use **Odin Inspector** to create custom editor tools.  
 This repository is intended both for learning purposes and future reusability in other projects.
