@@ -47,6 +47,8 @@ OdinTutorial/
 
 ## 🤝 Contributing
 
+Youtube:[https://www.youtube.com/@issoeEnt/videos]
+
 This is an open-source learning project.  
 Feel free to contribute via pull requests, issues, or sharing your own custom Odin tools.
 
