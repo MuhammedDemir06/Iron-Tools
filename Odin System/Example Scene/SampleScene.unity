@@ -164,9 +164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canAttack: 0
-  AttackPower: 50
-  AttackRange: 50
-  AttackAnimName: jsdfhjdshjkdf
+  AttackPower: 0
+  AttackRange: 0
+  AttackAnimName: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

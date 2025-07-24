@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using IronTools.Attributes;
 
 public class OdinTest : MonoBehaviour
 {
-    //Test
-    [Header("Player Can Attack???")]
-    [SerializeField] private bool canAttack;
+    public bool canAttack;
 
     [ShowIf("canAttack")]
     public int AttackPower;
@@ -13,4 +11,11 @@ public class OdinTest : MonoBehaviour
     public float AttackRange;
     [ShowIf("canAttack")]
     public string AttackAnimName;
+
+
+    [Button("","MyIcon",OnlyIcon = true)]
+    public void CharacterAction(int test)
+    {
+        canAttack = !canAttack;
+    }
 }

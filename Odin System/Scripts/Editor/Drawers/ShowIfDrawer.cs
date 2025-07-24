@@ -1,6 +1,7 @@
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
+using IronTools.Attributes;
 
 [CustomPropertyDrawer(typeof(ShowIfAttribute))]
 public class ShowIfDrawer : PropertyDrawer
@@ -10,7 +11,7 @@ public class ShowIfDrawer : PropertyDrawer
         ShowIfAttribute showIf = (ShowIfAttribute)attribute;
         SerializedProperty condition = property.serializedObject.FindProperty(showIf.ConditionFieldName);
 
-        if(condition!=null && condition.propertyType==SerializedPropertyType.Boolean && condition.boolValue)
+        if (condition != null && condition.propertyType == SerializedPropertyType.Boolean && condition.boolValue)
         {
             EditorGUI.PropertyField(position, property, label, true);
         }
@@ -20,13 +21,12 @@ public class ShowIfDrawer : PropertyDrawer
         ShowIfAttribute showIf = (ShowIfAttribute)attribute;
         SerializedProperty condition = property.serializedObject.FindProperty(showIf.ConditionFieldName);
 
-        if(condition!=null && condition.propertyType==SerializedPropertyType.Boolean && condition.boolValue)
+        if (condition != null && condition.propertyType == SerializedPropertyType.Boolean && condition.boolValue)
         {
             return EditorGUI.GetPropertyHeight(property, label, true);
         }
 
         return 0;
     }
-
 }
 #endif
