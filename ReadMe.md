@@ -6,23 +6,17 @@ A Unity project demonstrating how to use **Odin Inspector** to create custom edi
 This repository is intended both for learning purposes and future reusability in other projects.
 
 ## 🎯 Purpose
+✨ Extend and customize the Unity Editor using Odin Inspector and Iron Tools
 
-- Learn to extend the Unity Editor using Odin Inspector  
-- Create faster and cleaner development workflows  
-- Explore powerful Odin attributes such as `[ShowIf]`, `[Button]`, `[Title]`  
-- Build reusable editor utilities for your games  
+⚙️ Build modular and scalable attributes like [ShowIf], [Button], [Section], [ShowTitle], and more
 
-## 📁 Project Structure
-OdinTutorial/
-│
-├── Odin System/
-│ └── Scripts/
-│ └── OdinExamples/
-│ └── OdinBoolExample.cs
-│
-├── README.md
-└── .gitignore
+🎨 Design visually enhanced inspectors with dynamic layout and color themes
 
+🚀 Create faster, smarter development workflows using interactive editor elements
+
+🧩 Develop reusable and expandable editor frameworks for professional Unity projects
+
+🧠 Explore conditional rendering, runtime method triggers, and visual structuring via IronTools architecture
 
 ## 🛠 Technologies Used
 
