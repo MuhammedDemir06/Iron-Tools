@@ -18,24 +18,25 @@ public class ShowDividerDrawer : DecoratorDrawer
 
     public override void OnGUI(Rect position)
     {
-        ShowDividerAttribute attr = (ShowDividerAttribute)attribute;
+    ShowDividerAttribute attr = (ShowDividerAttribute)attribute;
 
-        float y = position.y + SpaceBefore;
+    float y = position.y + SpaceBefore;
 
-        if (!string.IsNullOrEmpty(attr.Title))
+    if (!string.IsNullOrEmpty(attr.Title))
+    {
+        var labelRect = new Rect(position.x, y - 2f, position.width, LabelHeight);
+        GUIStyle centeredBigBoldLabel = new GUIStyle(EditorStyles.boldLabel)
         {
-            var labelRect = new Rect(position.x, y, position.width, LabelHeight);
+            fontSize = 14,
+            alignment = TextAnchor.MiddleCenter,
+            normal = { textColor = EditorStyles.boldLabel.normal.textColor }
+        };
 
-            GUIStyle centeredBigBoldLabel = new GUIStyle(EditorStyles.boldLabel);
-            centeredBigBoldLabel.fontSize = 14;
-            centeredBigBoldLabel.alignment = TextAnchor.MiddleCenter;
-            centeredBigBoldLabel.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-
-            EditorGUI.LabelField(labelRect, attr.Title, centeredBigBoldLabel);
-            y += LabelHeight;
-        }
-
-        var lineRect = new Rect(position.x, y, position.width, LineHeight);
-        EditorGUI.DrawRect(lineRect, EditorColorPalette.Resolve(attr.Color));
+        EditorGUI.LabelField(labelRect, attr.Title, centeredBigBoldLabel);
+        y += LabelHeight;
     }
+
+    var lineRect = new Rect(position.x, y, position.width, LineHeight);
+    EditorGUI.DrawRect(lineRect, EditorColorPalette.Resolve(attr.Color));
+   }
 }
