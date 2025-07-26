@@ -27,23 +27,32 @@ OdinTutorial/
 ## 🛠 Technologies Used
 
 - Unity 2022.3 or higher  
-- [Odin Inspector](https://odininspector.com/) (paid asset from the Unity Asset Store)
 
 ## 🚀 How to Use
 
-1. Make sure Odin Inspector is installed in your project.  
+1. Make sure Iron Tools is installed in your project.  
 2. Clone or download this repository.  
 3. Drag any of the example scripts to a GameObject in your scene.  
-4. Observe the custom editor interface created by Odin in the Inspector window.
+4. Observe the custom editor interface created by Iron Tools in the Inspector window.
 
 ## 📚 Features (In Progress)
+✅ Boolean fields with [ShowIf], [EnableIf], and conditional visibility attributes
 
-- ✅ Boolean field with Odin attributes  
-- 🕒 Timed booleans and delayed actions  
-- 🧩 Enum-based UI behaviors  
-- 📂 Foldout groups and tab groups  
-- 🧠 ScriptableObject-based editor tools  
-- 📊 Visual data editors
+🕒 Timed booleans and delayed actions using custom editor logic
+
+🧩 Enum-based UI behaviors integrated with FoldoutGroup and Section styling
+
+📂 Foldout groups and divider-based layouts with [FoldoutGroup], [ShowDivider]
+
+🧠 ScriptableObject-powered editor tools for modular data control
+
+🎛️ Visual Inspector themes with centralized style via EditorColorPalette
+
+🎮 Interactive Inspector buttons with [Button], optional icons and method binding
+
+⚙️ Inline editors and nested object drawers (upcoming InlineEditorAttribute)
+
+📊 Visual data representation via custom GUIStyles and layout resolvers
 
 ## 🤝 Contributing
 

@@ -15,9 +15,24 @@ public class IronToolsSetupWizard : EditorWindow
     private void OnGUI()
     {
         EditorGUILayout.LabelField("Welcome to IronTools Attribute System", EditorStyles.boldLabel);
+
         EditorGUILayout.Space();
 
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
+
+        Texture2D logo = AssetDatabase.LoadAssetAtPath<Texture2D>(
+"Assets/Iron-Tools/docs/iron-Tools-logo.png");
+
+        if (logo != null)
+        {
+            float logoWidth = EditorGUIUtility.currentViewWidth - 40;
+            float logoHeight = logoWidth * ((float)logo.height / logo.width);
+
+            Rect logoRect = GUILayoutUtility.GetRect(logoWidth, logoHeight, GUILayout.ExpandWidth(false));
+            GUI.DrawTexture(logoRect, logo, ScaleMode.ScaleToFit);
+
+            EditorGUILayout.Space();
+        }
 
         EditorGUILayout.HelpBox("This tool helps you integrate IronTools Attributes into your project.", MessageType.Info);
 
