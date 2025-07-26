@@ -25,7 +25,13 @@ public class ShowDividerDrawer : DecoratorDrawer
         if (!string.IsNullOrEmpty(attr.Title))
         {
             var labelRect = new Rect(position.x, y, position.width, LabelHeight);
-            EditorGUI.LabelField(labelRect, attr.Title, EditorStyles.boldLabel);
+
+            GUIStyle centeredBigBoldLabel = new GUIStyle(EditorStyles.boldLabel);
+            centeredBigBoldLabel.fontSize = 14;
+            centeredBigBoldLabel.alignment = TextAnchor.MiddleCenter;
+            centeredBigBoldLabel.normal.textColor = EditorStyles.boldLabel.normal.textColor;
+
+            EditorGUI.LabelField(labelRect, attr.Title, centeredBigBoldLabel);
             y += LabelHeight;
         }
 
