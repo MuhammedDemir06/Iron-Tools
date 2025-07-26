@@ -1,27 +1,31 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using IronTools.Attributes;
 
 public class IronToolTest : MonoBehaviour
 {
-    [ShowTitle("PLAYER SPEED", EditorColor.Green)]
+    [ShowTitle("Player Speed", EditorColor.Orange)]
     [SerializeField] private float playerSpeed;
+
     [Space(20)]
-    [Section(EditorColor.Red)]
-    public bool canAttack;
-    [ShowIf("canAttack")]
+    [Section(EditorColor.Blue)]
+    public bool CanAttack;
+
+    [ShowIf("CanAttack")]
+    [ShowTitle("Player Power")]
     public int AttackPower;
-    [ShowIf("canAttack")]
+    [ShowIf("CanAttack")]
     public float AttackRange;
-    [ShowIf("canAttack")]
+    [ShowIf("CanAttack")]
     public string AttackAnimName;
 
-    [ShowDivider(EditorColor.Red, "Attack Settings")]
-    public int damage;
+    [ShowDivider(EditorColor.Yellow)]
+    [SerializeField] private int playerJump;
+    [SerializeField] private bool isGround;
 
-    [ShowDivider(EditorColor.Blue)]
-    public float cooldown;
-    public void CharacterAction(int test)
+    [ShowButton(label:"",iconPath:"MyIcon",onlyIcon:true)]
+    public void SpawnPlayer(GameObject player,Vector3 playerSpawnPos)
     {
-        canAttack = !canAttack;
+        Instantiate(player, playerSpawnPos, Quaternion.identity);
     }
 }

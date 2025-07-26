@@ -1,12 +1,15 @@
-#if UNITY_EDITOR
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Reflection;
 using IronTools.Attributes;
+using System.Collections.Generic;
+using System;
 
 [CustomEditor(typeof(MonoBehaviour), true)]
 public class SpecialButtonEditor : Editor
 {
+    private Dictionary<string, object[]> methodParams = new();
+
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
@@ -15,23 +18,61 @@ public class SpecialButtonEditor : Editor
 
         foreach (var method in methods)
         {
-            var buttonAttr = method.GetCustomAttribute<ButtonAttribute>();
-            if (buttonAttr != null)
-            {
-                string label = string.IsNullOrEmpty(buttonAttr.ButtonLabel) ? method.Name : buttonAttr.ButtonLabel;
+            var attr = method.GetCustomAttribute<ShowButtonAttribute>();
+            if (attr == null) continue;
 
-                Texture2D icon = null;
-                if (!string.IsNullOrEmpty(buttonAttr.IconPath))
+            string label = string.IsNullOrEmpty(attr.ButtonLabel) ? method.Name : attr.ButtonLabel;
+            Texture2D icon = null;
+            if (!string.IsNullOrEmpty(attr.IconPath))
+                icon = Resources.Load<Texture2D>(attr.IconPath);
+
+            GUIContent content = new GUIContent(attr.OnlyIcon ? "" : label, icon, label);
+            GUIStyle buttonStyle = new GUIStyle(GUI.skin.button)
+            {
+                imagePosition = attr.OnlyIcon ? ImagePosition.ImageOnly : ImagePosition.ImageLeft,
+                fixedHeight = 32
+            };
+
+            // Parametreleri al
+            var parameters = method.GetParameters();
+            if (parameters.Length > 0)
+            {
+                if (!methodParams.ContainsKey(method.Name))
+                    methodParams[method.Name] = new object[parameters.Length];
+
+                EditorGUILayout.BeginVertical("box");
+
+                for (int i = 0; i < parameters.Length; i++)
                 {
-                    icon = Resources.Load<Texture2D>(buttonAttr.IconPath);
+                    var param = parameters[i];
+                    Type type = param.ParameterType;
+
+                    object currentValue = methodParams[method.Name][i];
+
+                    if (type == typeof(int))
+                        methodParams[method.Name][i] = EditorGUILayout.IntField(param.Name, currentValue != null ? (int)currentValue : 0);
+                    else if (type == typeof(float))
+                        methodParams[method.Name][i] = EditorGUILayout.FloatField(param.Name, currentValue != null ? (float)currentValue : 0f);
+                    else if (type == typeof(string))
+                        methodParams[method.Name][i] = EditorGUILayout.TextField(param.Name, currentValue?.ToString() ?? "");
+                    else if (type == typeof(Vector3))
+                        methodParams[method.Name][i] = EditorGUILayout.Vector3Field(param.Name, currentValue != null ? (Vector3)currentValue : Vector3.zero);
+                    else if (typeof(UnityEngine.Object).IsAssignableFrom(type))
+                        methodParams[method.Name][i] = EditorGUILayout.ObjectField(param.Name, currentValue as UnityEngine.Object, type, true);
+                    else
+                        EditorGUILayout.LabelField(param.Name + " (Unsupported Type)");
                 }
 
-                GUIContent content = new GUIContent(label, icon, "Click to invoke " + label);
+                if (GUILayout.Button(content, buttonStyle))
+                {
+                    method.Invoke(target, methodParams[method.Name]);
+                }
 
-                GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
-                buttonStyle.imagePosition = ImagePosition.ImageLeft;
-
-                if (GUILayout.Button(content,buttonStyle, GUILayout.Height(30)))
+                EditorGUILayout.EndVertical();
+            }
+            else
+            {
+                if (GUILayout.Button(content, buttonStyle))
                 {
                     method.Invoke(target, null);
                 }
@@ -39,4 +80,4 @@ public class SpecialButtonEditor : Editor
         }
     }
 }
-#endif
+

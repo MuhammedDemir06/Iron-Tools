@@ -10,13 +10,13 @@ namespace IronTools.Attributes
             ConditionFieldName = conditionFieldName;
         }
     }
-    public class ButtonAttribute : Attribute
+    public class ShowButtonAttribute : Attribute
     {
         public string ButtonLabel;
         public string IconPath;
         public bool OnlyIcon;
 
-        public ButtonAttribute(string label = null, string iconPath = null, bool onlyIcon = false)
+        public ShowButtonAttribute(string label = null, string iconPath = null, bool onlyIcon = false)
         {
             ButtonLabel = label;
             IconPath = iconPath;
