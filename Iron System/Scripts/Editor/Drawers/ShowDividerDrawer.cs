@@ -1,4 +1,4 @@
-﻿using IronTools.Attributes;
+using IronTools.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,6 +10,25 @@ public class ShowDividerDrawer : DecoratorDrawer
     private const float SpaceAfter = 5f;
     private const float LabelHeight = 18f;
 
+    // Lazy-loaded style cache
+    private static GUIStyle _centeredBigBoldLabel;
+    private static GUIStyle CenteredBigBoldLabel
+    {
+        get
+        {
+            if (_centeredBigBoldLabel == null)
+            {
+                _centeredBigBoldLabel = new GUIStyle(EditorStyles.boldLabel)
+                {
+                    fontSize = 14,
+                    alignment = TextAnchor.MiddleCenter,
+                    normal = { textColor = EditorStyles.boldLabel.normal.textColor }
+                };
+            }
+            return _centeredBigBoldLabel;
+        }
+    }
+
     public override float GetHeight()
     {
         ShowDividerAttribute attr = (ShowDividerAttribute)attribute;
@@ -18,25 +37,24 @@ public class ShowDividerDrawer : DecoratorDrawer
 
     public override void OnGUI(Rect position)
     {
-    ShowDividerAttribute attr = (ShowDividerAttribute)attribute;
+        // ✅ Thread safety — Only run in main thread
+        if (System.Threading.Thread.CurrentThread.ManagedThreadId != 1)
+            return;
 
-    float y = position.y + SpaceBefore;
+        ShowDividerAttribute attr = (ShowDividerAttribute)attribute;
 
-    if (!string.IsNullOrEmpty(attr.Title))
-    {
-        var labelRect = new Rect(position.x, y - 2f, position.width, LabelHeight);
-        GUIStyle centeredBigBoldLabel = new GUIStyle(EditorStyles.boldLabel)
+        float y = position.y + SpaceBefore;
+
+        // Draw title if present
+        if (!string.IsNullOrEmpty(attr.Title))
         {
-            fontSize = 14,
-            alignment = TextAnchor.MiddleCenter,
-            normal = { textColor = EditorStyles.boldLabel.normal.textColor }
-        };
+            var labelRect = new Rect(position.x, y - 2f, position.width, LabelHeight);
+            EditorGUI.LabelField(labelRect, attr.Title, CenteredBigBoldLabel);
+            y += LabelHeight;
+        }
 
-        EditorGUI.LabelField(labelRect, attr.Title, centeredBigBoldLabel);
-        y += LabelHeight;
+        // Draw divider line
+        var lineRect = new Rect(position.x, y, position.width, LineHeight);
+        EditorGUI.DrawRect(lineRect, EditorColorPalette.Resolve(attr.Color));
     }
-
-    var lineRect = new Rect(position.x, y, position.width, LineHeight);
-    EditorGUI.DrawRect(lineRect, EditorColorPalette.Resolve(attr.Color));
-   }
 }
