@@ -52,7 +52,7 @@ public class IronToolsSetupWizard : EditorWindow
 
         if (GUILayout.Button("My Youtube Channel"))
         {
-            Application.OpenURL("https://www.youtube.com/@issoeEnt/videos");
+            Application.OpenURL("https://www.youtube.com/@InverseMaple/videos");
         }
 
         EditorGUILayout.Space();
